@@ -1,0 +1,27 @@
+service: hello-world-test
+frameworkVersion: "2"
+
+provider:
+  name: aws
+  runtime: python3.8
+
+functions:
+  insert-bucket:
+    handler: handler.hello
+    events:
+      - s3:
+          bucket: luisgsilva
+          existing: true
+  remove-bucket:
+    handler: handler.hello
+    events:
+      - s3:
+          bucket: luisgsilva
+          event: s3:ObjectRemoved:*
+          existing: true
+  ping-endpoint:
+    handler: handler.hello
+    events:
+      - http:
+          path: ping
+          method: get
